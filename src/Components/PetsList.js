@@ -8,10 +8,11 @@ const [petImage, setpetImage] = useState(pet.image);
   onClick={handlePet}
   */
 function PetsList() {
-  const [query, setQuery] = useState("");
-
+  const [query, setQuery] = useState(""); // 1
+  const [type, setType] = useState("");
   const petList = pets
     .filter((pet) => pet.name.toLowerCase().includes(query.toLowerCase()))
+    .filter((pet) => pet.type.includes(type))
     .map((pet) => <PetItem pet={pet} key={pet.id} />);
 
   return (
@@ -30,12 +31,15 @@ function PetsList() {
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="search-addon"
-                  onChange={(event) => setQuery(event.target.value)}
+                  onChange={(event) => setQuery(event.target.value)} // 3
                 />
               </div>
               <br />
               Type:
-              <select className="form-select">
+              <select
+                className="form-select"
+                onChange={(event) => setType(event.target.value)}
+              >
                 <option value="" selected>
                   All
                 </option>
