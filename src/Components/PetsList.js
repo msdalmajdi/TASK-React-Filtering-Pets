@@ -1,8 +1,18 @@
+import React, { useState } from "react";
 import pets from "../petsData";
 import PetItem from "./PetItem";
 
+/*
+const [petImage, setpetImage] = useState(pet.image);
+  const handlePet = () => setpetImage(pet.image2);
+  onClick={handlePet}
+  */
 function PetsList() {
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+  const [query, setQuery] = useState("");
+
+  const petList = pets
+    .filter((pet) => pet.name.toLowerCase().includes(query.toLowerCase()))
+    .map((pet) => <PetItem pet={pet} key={pet.id} />);
 
   return (
     <section id="doctors" className="doctor-section pt-140">
@@ -20,6 +30,7 @@ function PetsList() {
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="search-addon"
+                  onChange={(event) => setQuery(event.target.value)}
                 />
               </div>
               <br />
